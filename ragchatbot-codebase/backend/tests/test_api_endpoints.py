@@ -149,6 +149,26 @@ class TestAPIErrorHandling:
                 #     # Cleanup
                 #     app.dependency_overrides.clear()
 
+                # def test_query_with_rag_error(self, test_app, client):
+                #     mock_rag = Mock()
+                #     mock_rag.query.side_effect = Exception("Database connection failed")
+                #     test_app.dependency_overrides[get_rag_system] = lambda: mock_rag
+                    
+                #     response = client.post("/api/query", json={"query": "test"})
+                #     assert response.status_code == 500
+
+
+                # @pytest.fixture
+                # def failing_rag():
+                #     mock = Mock()
+                #     mock.query.side_effect = Exception("Search error")
+                #     return mock
+
+                # def test_query_error(self, test_app, client, failing_rag):
+                #     test_app.dependency_overrides[get_rag_system] = lambda: failing_rag
+                #     response = client.post("/api/query", json={"query": "test"})
+                #     assert response.status_code == 500
+
     def test_courses_endpoint_with_rag_system_error(self, client):
         """Test /api/courses endpoint when RAG system raises an exception"""
         # Similar to above, this would need app-level error injection
