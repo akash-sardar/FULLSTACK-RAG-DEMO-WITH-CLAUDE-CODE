@@ -115,8 +115,39 @@ class TestAPIErrorHandling:
         
         # To test actual error handling, you would need to:
         # 1. Create a separate test app fixture with error-prone mocks
-        # 2. Or use dependency injection to override the RAG system
+        # 2. Or use dependency injection to override the RAG system (see below)
         # 3. Or test error conditions in the actual app.py module tests
+                # @pytest.fixture
+                # def test_app():
+                #     """Create a test FastAPI app with dependency injection"""
+                #     import sys
+                #     import os
+                #     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    
+                #     from app import app  # Import real app
+                #     from rag_system import get_rag_system  # Import dependency function
+                    
+                #     # Create mock RAG system
+                #     mock_rag = Mock()
+                #     mock_rag.query.return_value = (
+                #         "This is a test response about course content.",
+                #         ["Building Towards Computer Use with Anthropic - Lesson 1"],
+                #         ["https://example.com/lesson1"]
+                #     )
+                #     mock_rag.get_course_analytics.return_value = {
+                #         "total_courses": 2,
+                #         "course_titles": ["Building Towards Computer Use with Anthropic", "Advanced AI Techniques"]
+                #     }
+                #     mock_rag.session_manager.create_session.return_value = "test-session-123"
+                #     mock_rag.session_manager.clear_session.return_value = None
+                    
+                #     # Override dependency
+                #     app.dependency_overrides[get_rag_system] = lambda: mock_rag
+                    
+                #     yield app
+                    
+                #     # Cleanup
+                #     app.dependency_overrides.clear()
 
     def test_courses_endpoint_with_rag_system_error(self, client):
         """Test /api/courses endpoint when RAG system raises an exception"""
